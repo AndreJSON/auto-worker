@@ -142,6 +142,7 @@ mole = {
 		boats: {
 			small: 'item-box-boundRowBoat'
 		},
+		boatDialogue: 'dialogue-id-boat',
 		sendBoat : function () {
 			var i;
 			for (i = 0; i < mole.g.boatTimers.length; i += 1) {
@@ -151,6 +152,7 @@ mole = {
 			}
 			//Only get here if no boat is out.
 			mole.clickElement(mole.getElement(mole.g.boats.small));
+			mole.clickElement(mole.getElement(mole.g.boatDialogue).childNodes[15]);
 		}
 	},
 	getElement: function(id) {
