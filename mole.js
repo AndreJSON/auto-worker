@@ -9,7 +9,8 @@ mole = {
 	runtimeOptions: {
 		barType: 0,
 		seedType: 0,
-		potionType: 0
+		potionType: 0,
+		boatType: 0
 	},
 	tabs : {
 		'crafting'	: 'tab-container-bar-crafting',
@@ -139,9 +140,10 @@ mole = {
 			'notif-rowBoatTimer',
 			'notif-canoeTimer'
 		],
-		boats: {
-			small: 'item-box-boundRowBoat'
-		},
+		boats: [
+			{name: 'small', id: 'item-box-boundRowBoat'},
+			{name: 'large', id: 'item-box-boundCanoe'}
+		],
 		boatDialogue: 'dialogue-id-boat',
 		sendBoat : function () {
 			var i;
@@ -151,8 +153,12 @@ mole = {
 				}
 			}
 			//Only get here if no boat is out.
-			mole.clickElement(mole.getElement(mole.g.boats.small));
+			mole.clickElement(mole.getElement(mole.g.boats[mole.runtimeOptions.boatType].id));
 			mole.clickElement(mole.getElement(mole.g.boatDialogue).childNodes[15]);
+		},
+		changeBoat: function (boatType) {
+			mole.runtimeOptions.boatType = boatType % mole.g.boats.length;
+			mole.getElement('boatButton').innerHTML = mole.g.boats[mole.runtimeOptions.boatType].name;
 		}
 	},
 	getElement: function(id) {
@@ -201,13 +207,14 @@ mole = {
 	},
 	saveToCookie: function () {
 		mole.createCookie('barType', mole.runtimeOptions.barType, 100);
-		mole.createCookie('smeltCheckbox', mole.getElement('smeltCheckbox').checked);
+		mole.createCookie('smeltCheckbox', mole.getElement('smeltCheckbox').checked, 100);
 		mole.createCookie('seedType', mole.runtimeOptions.seedType, 100);
-		mole.createCookie('seedCheckbox', mole.getElement('seedCheckbox').checked);
-		mole.createCookie('potionCheckbox', mole.getElement('potionCheckbox').checked);
-		mole.createCookie('wcCheckbox', mole.getElement('wcCheckbox').checked);
-		mole.createCookie('cbCheckbox', mole.getElement('cbCheckbox').checked);
-		mole.createCookie('boatCheckbox', mole.getElement('boatCheckbox').checked);
+		mole.createCookie('seedCheckbox', mole.getElement('seedCheckbox').checked, 100);
+		mole.createCookie('potionCheckbox', mole.getElement('potionCheckbox').checked, 100);
+		mole.createCookie('wcCheckbox', mole.getElement('wcCheckbox').checked, 100);
+		mole.createCookie('cbCheckbox', mole.getElement('cbCheckbox').checked, 100);
+		mole.createCookie('boatCheckbox', mole.getElement('boatCheckbox').checked, 100);
+		mole.createCookie('boatType', mole.runtimeOptions.boatType, 100);
 	},
 	loadFromCookie: function () {
 		mole.crafting.changeBar(mole.readCookie('barType',0));
@@ -218,6 +225,7 @@ mole = {
 		mole.getElement('wcCheckbox').checked =  (mole.readCookie('wcCheckbox', 'false') === 'true');
 		mole.getElement('cbCheckbox').checked =  (mole.readCookie('cbCheckbox', 'false') === 'true');
 		mole.getElement('boatCheckbox').checked =  (mole.readCookie('boatCheckbox', 'false') === 'true');
+		mole.g.changeBoat(mole.readCookie('boatType',0));
 	},
 	reloadPage: function () {
 		window.location.reload(false);
@@ -278,8 +286,8 @@ mole = {
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="boatCheckbox">' +
-				'<button style="height:52px; width:45px; background:#FFFFFF" id="boatButton" onclick="">' + 
-					'boat' + 
+				'<button style="height:52px; width:45px; background:#FFFFFF" id="boatButton" onclick="mole.g.changeBoat(mole.runtimeOptions.boatType+1)">' + 
+					'small' + 
 				'</button>' +
 			'</div>' +
 		'</span>'
