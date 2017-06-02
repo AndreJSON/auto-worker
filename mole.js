@@ -10,7 +10,8 @@ mole = {
 		barType: 0,
 		seedType: 0,
 		potionType: 0,
-		boatType: 0
+		boatType: 0,
+		fightType: 0,
 	},
 	tabs : {
 		'crafting'	: 'tab-container-bar-crafting',
@@ -121,16 +122,24 @@ mole = {
 		combatContainer: 'tab-sub-container-combat',
 		fightSelector: 'dialogue-fight',
 		monsterWindow: 'monster-area',
+		fightMapper: [
+			{name: 'cave', index: 6},
+			{name: 'volcano', index: 8}
+		],
 		fight : function () {
 			if(mole.getElement(mole.cb.cooldown).innerHTML === "Ready" && mole.getElement(mole.cb.monsterWindow).style.display === 'none') {
 				var i, children = mole.getElement(mole.cb.fightSelector).childNodes;
 				for (i = 0; i < children.length; i+=1) {
 					if(children[i].localName === "table") {
-						mole.clickElement(children[i].childNodes[1].childNodes[6]);
+						mole.clickElement(children[i].childNodes[1].childNodes[mole.cb.fightMapper[mole.runtimeOptions.fightType].index]);
 						mole.clickElement(mole.getElement(mole.g.confirmButton));
 					}
 				}
 			}
+		},
+		changeFight : function (fightType) {
+			mole.runtimeOptions.fightType = fightType % mole.cb.fightMapper.length;
+			mole.getElement('cbButton').innerHTML = mole.cb.fightMapper[mole.runtimeOptions.fightType].name;
 		}
 	},
 	g : { //g for general
@@ -213,6 +222,7 @@ mole = {
 		mole.createCookie('potionCheckbox', mole.getElement('potionCheckbox').checked, 100);
 		mole.createCookie('wcCheckbox', mole.getElement('wcCheckbox').checked, 100);
 		mole.createCookie('cbCheckbox', mole.getElement('cbCheckbox').checked, 100);
+		mole.createCookie('fightType', mole.runtimeOptions.fightType, 100);
 		mole.createCookie('boatCheckbox', mole.getElement('boatCheckbox').checked, 100);
 		mole.createCookie('boatType', mole.runtimeOptions.boatType, 100);
 	},
@@ -224,6 +234,7 @@ mole = {
 		mole.getElement('potionCheckbox').checked =  (mole.readCookie('potionCheckbox', 'false') === 'true');
 		mole.getElement('wcCheckbox').checked =  (mole.readCookie('wcCheckbox', 'false') === 'true');
 		mole.getElement('cbCheckbox').checked =  (mole.readCookie('cbCheckbox', 'false') === 'true');
+		mole.cb.changeFight(mole.readCookie('fightType',0));
 		mole.getElement('boatCheckbox').checked =  (mole.readCookie('boatCheckbox', 'false') === 'true');
 		mole.g.changeBoat(mole.readCookie('boatType',0));
 	},
@@ -280,8 +291,8 @@ mole = {
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="cbCheckbox">' +
-				'<button style="height:52px; width:70px; background:#FFFFFF" id="cbButton" onclick="">' + 
-					'combat' + 
+				'<button style="height:52px; width:70px; background:#FFFFFF" id="cbButton" onclick="mole.cb.changeFight(mole.runtimeOptions.fightType+1)">' + 
+					'cave' + 
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
