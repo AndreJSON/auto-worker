@@ -62,7 +62,8 @@ mole = {
 		],
 		seeds : [
 			{name: 'redshroom', id: 'dialogue-plant-redMushroomSeeds'},
-			{name: 'dotted', id: 'dialogue-plant-dottedGreenLeafSeeds'}
+			{name: 'dotted', id: 'dialogue-plant-dottedGreenLeafSeeds'},
+			{name: 'blewit', id: 'dialogue-plant-blewitMushroomSeeds'}
 		],
 		farm : function () {
 			var i;
@@ -123,8 +124,11 @@ mole = {
 		fightSelector: 'dialogue-fight',
 		monsterWindow: 'monster-area',
 		fightMapper: [
+			{name: 'first', index: 2},
+			{name: 'second', index: 4},
 			{name: 'cave', index: 6},
-			{name: 'volcano', index: 8}
+			{name: 'volcano', index: 8},
+			{name: 'NF', index: 10}
 		],
 		fight : function () {
 			if(mole.getElement(mole.cb.cooldown).innerHTML === "Ready" && mole.getElement(mole.cb.monsterWindow).style.display === 'none') {
