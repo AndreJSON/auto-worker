@@ -1,9 +1,9 @@
 'use strict';
-
+ 
 /********************************************
 *************  Mom's spaghetti  *************
 ********************************************/
-
+ 
 var mole;
 mole = {
 	runtimeOptions: {
@@ -14,11 +14,11 @@ mole = {
 		fightType: 0,
 	},
 	tabs : {
-		'crafting'	: 'tab-container-bar-crafting',
-		'farming'	: 'tab-container-bar-farming',
-		'mining'	: 'tab-container-bar-mining',
-		'shop'		: 'tab-container-bar-shop',
-		'wc'		: 'tab-container-bar-woodcutting'
+		'crafting'  : 'tab-container-bar-crafting',
+		'farming'   : 'tab-container-bar-farming',
+		'mining'    : 'tab-container-bar-mining',
+		'shop'      : 'tab-container-bar-shop',
+		'wc'        : 'tab-container-bar-woodcutting'
 	},
 	crafting : {
 		furnaces : {
@@ -58,16 +58,26 @@ mole = {
 			{id: 'farming-patch-area-1', textId: 'farming-patch-text-1'},
 			{id: 'farming-patch-area-2', textId: 'farming-patch-text-2'},
 			{id: 'farming-patch-area-3', textId: 'farming-patch-text-3'},
-			{id: 'farming-patch-area-4', textId: 'farming-patch-text-4'}
+			{id: 'farming-patch-area-4', textId: 'farming-patch-text-4'},
+			{id: 'farming-patch-area-5', textId: 'farming-patch-text-5'},
+			{id: 'farming-patch-area-6', textId: 'farming-patch-text-6'}
 		],
 		seeds : [
 			{name: 'redshroom', id: 'dialogue-plant-redMushroomSeeds'},
 			{name: 'dotted', id: 'dialogue-plant-dottedGreenLeafSeeds'},
-			{name: 'blewit', id: 'dialogue-plant-blewitMushroomSeeds'}
+			{name: 'blewit', id: 'dialogue-plant-blewitMushroomSeeds'},
+			{name: 'greenL', id: 'dialogue-plant-greenLeafSeeds'},
+			{name: 'lime', id: 'dialogue-plant-limeLeafSeeds'},
+			{name: 'gold', id: 'dialogue-plant-goldLeafSeeds'},
+			{name: 'snape', id: 'dialogue-plant-snapegrassSeeds'},
+			{name: 'carrot', id: 'dialogue-plant-carrotSeeds'},
+			{name: 'tomato', id: 'dialogue-plant-tomatoSeeds'},
+			{name: 'potato', id: 'dialogue-plant-potatoSeeds'},
+			{name: 'wheat', id: 'dialogue-plant-wheatSeeds'}
 		],
 		farm : function () {
 			var i;
-			for(i = 0; i < 4; i += 1) {
+			for(i = 0; i < 6; i += 1) {
 				if(mole.getElement(mole.farming.patches[i].textId).innerHTML === 'Click to grow') {
 					mole.clickElement(mole.getElement(mole.farming.patches[i].id));
 					mole.clickElement(mole.getElement(mole.farming.seeds[mole.runtimeOptions.seedType].id));
@@ -99,18 +109,22 @@ mole = {
 			'wc-div-tree-lbl-1',
 			'wc-div-tree-lbl-2',
 			'wc-div-tree-lbl-3',
-			'wc-div-tree-lbl-4'
+			'wc-div-tree-lbl-4',
+			'wc-div-tree-lbl-5',
+			'wc-div-tree-lbl-6'
 		],
 		trees : [
 			'wc-div-tree-1',
 			'wc-div-tree-2',
 			'wc-div-tree-3',
-			'wc-div-tree-4'
+			'wc-div-tree-4',
+			'wc-div-tree-5',
+			'wc-div-tree-6'
 		],
 		confirmBox : 'dialogue-loot',
 		harvestTrees: function() {
 			var i;
-			for(i = 0; i < 4; i+=1) {
+			for(i = 0; i < 6; i+=1) {
 				if(mole.getElement(mole.wc.growthStatuses[i]).innerHTML === '(ready)') {
 					mole.clickElement(mole.getElement(mole.wc.trees[i]));
 					console.log(i + " is ready");
@@ -124,8 +138,8 @@ mole = {
 		fightSelector: 'dialogue-fight',
 		monsterWindow: 'monster-area',
 		fightMapper: [
-			{name: 'first', index: 2},
-			{name: 'second', index: 4},
+			{name: 'fields', index: 2},
+			{name: 'forests', index: 4},
 			{name: 'cave', index: 6},
 			{name: 'volcano', index: 8},
 			{name: 'NF', index: 10}
@@ -267,47 +281,47 @@ mole = {
 		mole.saveToCookie();
 		setTimeout(mole.main, 5000);
 	},
-	navPanel: 
+	navPanel:
 		'<span class="notif-box" style="height:50px;width:465px;">' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="smeltCheckbox">' +
-				'<button style="height:52px; width:55px; background:#FFFFFF" id="smeltButton" onclick="mole.crafting.changeBar(mole.runtimeOptions.barType+1)">' + 
-					'bronze' + 
+				'<button style="height:52px; width:55px; background:#FFFFFF" id="smeltButton" onclick="mole.crafting.changeBar(mole.runtimeOptions.barType+1)">' +
+					'bronze' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="seedCheckbox">' +
-				'<button style="height:52px; width:75px; background:#FFFFFF" id="seedButton" onclick="mole.farming.changeSeed(mole.runtimeOptions.seedType+1)">' + 
-					'redshroom' + 
+				'<button style="height:52px; width:75px; background:#FFFFFF" id="seedButton" onclick="mole.farming.changeSeed(mole.runtimeOptions.seedType+1)">' +
+					'redshroom' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="potionCheckbox">' +
-				'<button style="height:52px; width:55px; background:#FFFFFF" id="potionButton" onclick="">' + 
-					'sd pot' + 
+				'<button style="height:52px; width:55px; background:#FFFFFF" id="potionButton" onclick="">' +
+					'sd pot' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="wcCheckbox">' +
-				'<button style="height:52px; width:45px; background:#FFFFFF" id="wcButton" onclick="">' + 
-					'chop' + 
+				'<button style="height:52px; width:45px; background:#FFFFFF" id="wcButton" onclick="">' +
+					'chop' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="cbCheckbox">' +
-				'<button style="height:52px; width:70px; background:#FFFFFF" id="cbButton" onclick="mole.cb.changeFight(mole.runtimeOptions.fightType+1)">' + 
-					'cave' + 
+				'<button style="height:52px; width:70px; background:#FFFFFF" id="cbButton" onclick="mole.cb.changeFight(mole.runtimeOptions.fightType+1)">' +
+					'cave' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="boatCheckbox">' +
-				'<button style="height:52px; width:45px; background:#FFFFFF" id="boatButton" onclick="mole.g.changeBoat(mole.runtimeOptions.boatType+1)">' + 
-					'small' + 
+				'<button style="height:52px; width:45px; background:#FFFFFF" id="boatButton" onclick="mole.g.changeBoat(mole.runtimeOptions.boatType+1)">' +
+					'small' +
 				'</button>' +
 			'</div>' +
 		'</span>'
 };
-
+ 
 setTimeout(function () {mole.addNavPanel();}, 1000);
 setTimeout(function () {mole.loadFromCookie();}, 1500);
 setTimeout(function () {mole.selectTab('farming');}, 2000);
