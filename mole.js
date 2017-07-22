@@ -165,14 +165,18 @@ mole = {
 		effectBar : 'notifaction-area',
 		boatTimers: [
 			'notif-rowBoatTimer',
-			'notif-canoeTimer'
+			'notif-canoeTimer',
+			'notif-sailBoatTimer'
 		],
 		boats: [
 			{name: 'small', id: 'item-box-boundRowBoat'},
-			{name: 'large', id: 'item-box-boundCanoe'}
+			{name: 'large', id: 'item-box-boundCanoe'},
+			{name: 'sail',	id: 'item-box-boundSailBoat'}
 		],
 		boatDialogue: 'dialogue-id-boat',
+		boatWind: 'sailboat-wind',
 		sendBoat : function () {
+			console.log(mole.getElement(mole.g.boatWind));
 			var i;
 			for (i = 0; i < mole.g.boatTimers.length; i += 1) {
 				if(mole.getElement(mole.g.boatTimers[i]).childNodes[1].innerHTML !== "") {
@@ -186,6 +190,15 @@ mole = {
 		changeBoat: function (boatType) {
 			mole.runtimeOptions.boatType = boatType % mole.g.boats.length;
 			mole.getElement('boatButton').innerHTML = mole.g.boats[mole.runtimeOptions.boatType].name;
+		},
+		rocket: "item-box-boundRocket",
+		rocketReady: "notification-static-rocketReady",
+		rocketConfirm: "dialogue-confirm",
+		sendRocket : function () {
+			if(mole.getElement(mole.g.rocketReady).style.display !== 'none') {
+				mole.clickElement(mole.getElement(mole.g.rocket));
+				mole.clickElement(mole.getElement(mole.g.rocketConfirm).childNodes[7]);
+			}
 		}
 	},
 	getElement: function(id) {
@@ -278,6 +291,7 @@ mole = {
 		if(mole.getElement('boatCheckbox').checked) {
 			setTimeout(mole.g.sendBoat, 1000);
 		}
+		setTimeout(mole.g.sendRocket, 1000);
 		mole.saveToCookie();
 		setTimeout(mole.main, 5000);
 	},
