@@ -176,7 +176,7 @@ mole = {
 		boatDialogue: 'dialogue-id-boat',
 		boatWind: 'sailboat-wind',
 		sendBoat : function () {
-			console.log(mole.getElement(mole.g.boatWind));
+			//console.log(mole.getElement(mole.g.boatWind));
 			var i;
 			for (i = 0; i < mole.g.boatTimers.length; i += 1) {
 				if(mole.getElement(mole.g.boatTimers[i]).childNodes[1].innerHTML !== "") {
@@ -193,9 +193,14 @@ mole = {
 		},
 		rocket: "item-box-boundRocket",
 		rocketReady: "notification-static-rocketReady",
+		rocketLanded: "notification-static-rocketLanded",
 		rocketConfirm: "dialogue-confirm",
 		sendRocket : function () {
 			if(mole.getElement(mole.g.rocketReady).style.display !== 'none') {
+				mole.clickElement(mole.getElement(mole.g.rocket));
+				mole.clickElement(mole.getElement(mole.g.rocketConfirm).childNodes[7]);
+			}
+			if(mole.getElement(mole.g.rocketLanded).style.display !== 'none') {
 				mole.clickElement(mole.getElement(mole.g.rocket));
 				mole.clickElement(mole.getElement(mole.g.rocketConfirm).childNodes[7]);
 			}
