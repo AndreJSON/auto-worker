@@ -160,6 +160,18 @@ mole = {
 			mole.getElement('cbButton').innerHTML = mole.cb.fightMapper[mole.runtimeOptions.fightType].name;
 		}
 	},
+	mm : {
+		oven: "item-box-boundPromethiumOven",
+		ovenDialogue: "dialogue-id-oven",
+		ovenDialogue2: "dialogue-id-oven-addheat",
+		ovenInput: "dialogue-oven-addheat-textbox",
+		burn: function() {
+			mole.clickElement(mole.getElement(mole.mm.oven));
+			mole.clickElement(mole.getElement(mole.mm.ovenDialogue).childNodes[18].childNodes[14]);
+			mole.getElement(mole.mm.ovenInput).value = 1;
+			mole.clickElement(mole.getElement(mole.mm.ovenDialogue2).childNodes[11]);
+		}
+	},
 	g : { //g for general
 		confirmButton : 'dialogue-confirm-yes',
 		effectBar : 'notifaction-area',
@@ -261,6 +273,7 @@ mole = {
 		mole.createCookie('fightType', mole.runtimeOptions.fightType, 100);
 		mole.createCookie('boatCheckbox', mole.getElement('boatCheckbox').checked, 100);
 		mole.createCookie('boatType', mole.runtimeOptions.boatType, 100);
+		mole.createCookie('burnCheckbox', mole.getElement('burnCheckbox').checked, 100);
 	},
 	loadFromCookie: function () {
 		mole.crafting.changeBar(mole.readCookie('barType',0));
@@ -273,6 +286,7 @@ mole = {
 		mole.cb.changeFight(mole.readCookie('fightType',0));
 		mole.getElement('boatCheckbox').checked =  (mole.readCookie('boatCheckbox', 'false') === 'true');
 		mole.g.changeBoat(mole.readCookie('boatType',0));
+		mole.getElement('burnCheckbox').checked =  (mole.readCookie('burnCheckbox', 'false') === 'true');
 	},
 	reloadPage: function () {
 		window.location.reload(false);
@@ -296,12 +310,15 @@ mole = {
 		if(mole.getElement('boatCheckbox').checked) {
 			setTimeout(mole.g.sendBoat, 1000);
 		}
+		if(mole.getElement('burnCheckbox').checked) {
+			setTimeout(mole.mm.burn, 1000);
+		}
 		setTimeout(mole.g.sendRocket, 1000);
 		mole.saveToCookie();
 		setTimeout(mole.main, 5000);
 	},
 	navPanel:
-		'<span class="notif-box" style="height:50px;width:465px;">' +
+		'<span class="notif-box" style="height:50px;width:530px;">' +
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="smeltCheckbox">' +
 				'<button style="height:52px; width:55px; background:#FFFFFF" id="smeltButton" onclick="mole.crafting.changeBar(mole.runtimeOptions.barType+1)">' +
@@ -336,6 +353,12 @@ mole = {
 				'<input type="checkbox" id="boatCheckbox">' +
 				'<button style="height:52px; width:45px; background:#FFFFFF" id="boatButton" onclick="mole.g.changeBoat(mole.runtimeOptions.boatType+1)">' +
 					'small' +
+				'</button>' +
+			'</div>' +
+			'<div style="display:inline">' +
+				'<input type="checkbox" id="burnCheckbox">' +
+				'<button style="height:52px; width:45px; background:#FFFFFF" id="burnButton" onclick="">' +
+					'burn' +
 				'</button>' +
 			'</div>' +
 		'</span>'
