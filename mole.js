@@ -96,7 +96,7 @@ mole = {
 			{box: 'item-box-essencePotion',	progress: 'notif-essencePotionTimer'}
 		],
 		drink: function () {
-			for (i = 0; i < potions.length; i++) {
+			for (i = 0; i < mole.brewing.potions.length; i++) {
 				if(mole.getElement(mole.brewing.potions[i].progress).style.display !== 'none' ) { //Potion in progress
 					continue;
 				}
