@@ -9,7 +9,6 @@ mole = {
 	runtimeOptions: {
 		barType: 0,
 		seedType: 0,
-		potionType: 0,
 		boatType: 0,
 		fightType: 0,
 	},
@@ -93,15 +92,21 @@ mole = {
 	},
 	brewing: {
 		potions: [
-			{name: 'sd pot', id: 'item-box-stardustPotion'}
+			'item-box-oilPotion',
+			'item-box-essencePotion'
 		],
-		potionProgress: 'notif-stardustPotionTimer',
+		potionProgress: [
+			'notif-oilPotionTimer',
+			'notif-essencePotionTimer'
+		]
 		drink: function () {
-			if(mole.getElement(mole.brewing.potionProgress).style.display !== 'none') { //Potion in progress
-				return;
+			for (i = 0; i < potions.length; i++) {
+				if(mole.getElement(mole.brewing.potionProgress[i]).style.display !== 'none' ) { //Potion in progress
+					continue;
+				}
+				mole.clickElement(mole.getElement(mole.brewing.potions[i]));
+				mole.clickElement(mole.getElement(mole.g.confirmButton));
 			}
-			mole.clickElement(mole.getElement(mole.brewing.potions[mole.runtimeOptions.potionType].id));
-			mole.clickElement(mole.getElement(mole.g.confirmButton));
 		}
 	},
 	wc : {
@@ -206,15 +211,15 @@ mole = {
 		rocket: "item-box-boundRocket",
 		rocketReady: "notification-static-rocketReady",
 		rocketLanded: "notification-static-rocketLanded",
-		rocketConfirm: "dialogue-confirm",
+		rocketConfirm: "rocket-send-moon",
 		sendRocket : function () {
 			if(mole.getElement(mole.g.rocketReady).style.display !== 'none') {
 				mole.clickElement(mole.getElement(mole.g.rocket));
-				mole.clickElement(mole.getElement(mole.g.rocketConfirm).childNodes[7]);
+				mole.clickElement(mole.getElement(mole.g.rocketConfirm));
 			}
 			if(mole.getElement(mole.g.rocketLanded).style.display !== 'none') {
 				mole.clickElement(mole.getElement(mole.g.rocket));
-				mole.clickElement(mole.getElement(mole.g.rocketConfirm).childNodes[7]);
+				mole.clickElement(mole.getElement(mole.g.rocketConfirm));
 			}
 		}
 	},
@@ -334,7 +339,7 @@ mole = {
 			'<div style="display:inline">' +
 				'<input type="checkbox" id="potionCheckbox">' +
 				'<button style="height:52px; width:55px; background:#FFFFFF" id="potionButton" onclick="">' +
-					'sd pot' +
+					'Potions' +
 				'</button>' +
 			'</div>' +
 			'<div style="display:inline">' +
