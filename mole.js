@@ -92,19 +92,15 @@ mole = {
 	},
 	brewing: {
 		potions: [
-			'item-box-oilPotion',
-			'item-box-essencePotion'
+			{box: 'item-box-oilPotion',		progress: 'notif-oilPotionTimer'},
+			{box: 'item-box-essencePotion',	progress: 'notif-essencePotionTimer'}
 		],
-		potionProgress: [
-			'notif-oilPotionTimer',
-			'notif-essencePotionTimer'
-		]
 		drink: function () {
 			for (i = 0; i < potions.length; i++) {
-				if(mole.getElement(mole.brewing.potionProgress[i]).style.display !== 'none' ) { //Potion in progress
+				if(mole.getElement(mole.brewing.potions[i].progress).style.display !== 'none' ) { //Potion in progress
 					continue;
 				}
-				mole.clickElement(mole.getElement(mole.brewing.potions[i]));
+				mole.clickElement(mole.getElement(mole.brewing.potions[i].box));
 				mole.clickElement(mole.getElement(mole.g.confirmButton));
 			}
 		}
